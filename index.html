@@ -2,15 +2,15 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Simulador de Crédito | Rede Consig</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; overflow-x: hidden; scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; overflow-x: hidden; scroll-behavior: smooth; width: 100%; }
         
-        /* Fundo com transparência ajustada para visibilidade elegante */
+        /* Fundo com transparência elegante de 0.75 */
         .hero-bg-section {
             background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url('images/trabalhadores-de-varias-profissoes-felizes-fundo-de-predios.png');
             background-size: cover;
@@ -18,7 +18,7 @@
             background-attachment: fixed;
         }
 
-        /* Estilo padronizado para os itens do menu */
+        /* Nav Items Padronizados */
         .nav-item {
             display: flex;
             align-items: center;
@@ -31,7 +31,7 @@
         }
         .nav-item:hover { color: #0f172a; }
 
-        /* Labels em Grafite Chumbo */
+        /* Labels Chumbo */
         .label-chumbo { 
             color: #334155; 
             font-weight: 800; 
@@ -55,7 +55,7 @@
         }
         .input-field:focus { border-color: #ff4500; background-color: #ffffff; box-shadow: 0 0 0 4px rgba(255, 69, 0, 0.1); }
 
-        /* Card Platinum com Efeito 3D Brilhante */
+        /* Card Platinum com Efeito Shimmer 3D */
         .platinum-card { 
             background: linear-gradient(135deg, #ff4500 0%, #d43800 100%); 
             position: relative; 
@@ -64,140 +64,116 @@
             transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .platinum-card:hover { transform: scale(1.02) translateY(-5px); }
-
-        /* Animação do Brilho (Shimmer Effect) */
         .platinum-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 60%;
-            height: 100%;
-            background: linear-gradient(
-                to right,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.4) 50%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            transform: skewX(-25deg);
-            animation: cardShine 4s infinite;
+            content: ''; position: absolute; top: 0; left: -150%; width: 60%; height: 100%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-25deg); animation: cardShine 4s infinite;
         }
+        @keyframes cardShine { 0% { left: -150%; } 20% { left: 150%; } 100% { left: 150%; } }
 
-        @keyframes cardShine {
-            0% { left: -150%; }
-            20% { left: 150%; }
-            100% { left: 150%; }
-        }
-
-        /* Slider e Radios */
-        .term-container input:checked + label {
-            background-color: #ff4500 !important;
-            color: white !important;
-            border-color: #ff4500 !important;
-        }
+        /* Sliders e Toggles */
+        .term-container input:checked + label { background-color: #ff4500 !important; color: white !important; border-color: #ff4500 !important; }
         .term-label { background-color: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; transition: all 0.3s ease; }
         input[type=range] { -webkit-appearance: none; width: 100%; height: 12px; background: #e2e8f0; border-radius: 20px; outline: none; }
         input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 34px; height: 34px; background: #ff4500; border: 4px solid white; border-radius: 50%; cursor: pointer; }
 
-        /* Vantagens e Depoimentos */
+        /* Botão Principal */
+        .btn-calc {
+            color: white; font-weight: 900; text-transform: uppercase;
+            border-radius: 1.2rem; transition: all 0.3s;
+            box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.1);
+            letter-spacing: 0.02em;
+        }
+
+        /* Cards Gerais */
         .advantage-card { background: #ffffff; border-radius: 2rem; padding: 2.5rem; border: 1px solid #f1f5f9; transition: all 0.4s; position: relative; }
         .advantage-card:hover { transform: translateY(-10px); border-color: #ff4500; box-shadow: 0 30px 60px -12px rgba(0,0,0,0.08); }
         .testimonial-card { background: #ffffff; padding: 2rem; border-radius: 1.5rem; border: 1px solid #f1f5f9; transition: all 0.3s; }
 
-        /* Valenttina Floating Avatar */
-        .valenttina-btn {
-            width: 80px; height: 80px; border-radius: 50%; overflow: hidden;
-            border: 4px solid #22c55e; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            transition: all 0.3s ease; pointer-events: auto;
+        /* Pop-up de Notificação Social */
+        #socialNotify {
+            position: fixed; bottom: 30px; left: -400px; z-index: 1000; background: white;
+            padding: 15px 20px; border-radius: 20px; box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            border-left: 5px solid #ff4500; display: flex; align-items: center; gap: 15px;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-width: calc(100% - 40px);
         }
-        .valenttina-btn img { width: 100%; height: 100%; object-fit: cover; }
+        #socialNotify.active { left: 20px; }
+
+        /* Drawer Mobile */
+        #mobileDrawer { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        #mobileDrawer.active { transform: translateX(0); }
+
+        /* Avatar Valenttina - Forçado Circular e Oculto em Celular */
+        .valenttina-container { display: none; }
+        @media (min-width: 1024px) { 
+            .valenttina-container { display: flex; } 
+        }
+        .valenttina-btn {
+            width: 80px; height: 80px; border-radius: 9999px; overflow: hidden;
+            border: 4px solid #22c55e; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: all 0.3s ease; pointer-events: auto; display: flex; align-items: center; justify-content: center;
+        }
+        .valenttina-btn img { width: 100%; height: 100%; object-fit: cover; border-radius: 9999px; aspect-ratio: 1/1; display: block; }
 
         /* Animação Digitando */
         .typing-indicator { display: inline-flex; gap: 2px; }
         .typing-dot { width: 4px; height: 4px; background: #94a3b8; border-radius: 50%; animation: dot-pulse 1s infinite ease-in-out; }
         @keyframes dot-pulse { 0%, 100% { opacity: 0.3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-2px); } }
 
-        /* Bancos */
         .bank-item { opacity: 0.3; transition: all 0.3s ease; }
         .bank-item.active { opacity: 1; transform: scale(1.05); }
-
-        /* Pop-up de Notificação Social */
-        #socialNotify {
-            position: fixed;
-            bottom: 30px;
-            left: -400px; /* Escondido inicialmente */
-            z-index: 1000;
-            background: white;
-            padding: 15px 20px;
-            border-radius: 20px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-            border-left: 5px solid #ff4500;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            max-width: 320px;
-        }
-        #socialNotify.active { left: 20px; }
     </style>
 </head>
 <body class="bg-white text-slate-900">
 
-    <header class="bg-white sticky top-0 z-50 py-5 shadow-sm">
+    <!-- Header -->
+    <header class="bg-white sticky top-0 z-[60] py-4 md:py-5 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
-            <div class="flex items-center gap-5">
+            <div class="flex items-center gap-3 md:gap-5">
                 <div class="flex items-center gap-1">
-                    <span class="text-3xl font-black text-slate-900 tracking-tighter">Rede</span>
-                    <span class="text-3xl font-black text-[#ff4500] tracking-tighter">Consig</span>
+                    <span class="text-2xl md:text-3xl font-black text-slate-900 tracking-tighter">Rede</span>
+                    <span class="text-2xl md:text-3xl font-black text-[#ff4500] tracking-tighter">Consig</span>
                 </div>
-                <div class="w-[1.5px] h-10 bg-orange-200 hidden md:block"></div>
-                <span class="text-[#ff4500] font-bold text-lg hidden md:block lowercase tracking-tight">sua vida sem dívidas!</span>
+                <div class="w-[1.5px] h-8 md:h-10 bg-orange-200 hidden md:block"></div>
+                <span class="text-[#ff4500] font-bold text-sm md:text-lg hidden md:block lowercase tracking-tight">sua vida sem dívidas!</span>
             </div>
             
             <nav class="hidden lg:flex items-center gap-10">
-                <a href="https://hubconectbr.github.io/siteconsultorfinanceiro40/" class="nav-item">
-                    <i data-lucide="home" class="w-4 h-4"></i>
-                    Inicial
-                </a>
-                <a href="#resultsArea" class="nav-item">
-                    <i data-lucide="briefcase" class="w-4 h-4"></i>
-                    Serviços
-                </a>
-                <a href="#vantagens" class="nav-item">
-                    <i data-lucide="award" class="w-4 h-4"></i>
-                    Vantagens
-                </a>
-                <a href="#depoimentos" class="nav-item">
-                    <i data-lucide="message-square" class="w-4 h-4"></i>
-                    Depoimentos
-                </a>
-                <a href="https://wa.me/5563999637080" class="nav-item">
-                    <i data-lucide="phone" class="w-4 h-4"></i>
-                    Contato
-                </a>
+                <a href="https://hubconectbr.github.io/siteconsultorfinanceiro40/" class="nav-item"><i data-lucide="home" class="w-4 h-4"></i> Inicial</a>
+                <a href="#resultsArea" class="nav-item"><i data-lucide="briefcase" class="w-4 h-4"></i> Serviços</a>
+                <a href="#vantagens" class="nav-item"><i data-lucide="award" class="w-4 h-4"></i> Vantagens</a>
+                <a href="#depoimentos" class="nav-item"><i data-lucide="message-square" class="w-4 h-4"></i> Depoimentos</a>
+                <a href="https://wa.me/5563999637080" class="nav-item"><i data-lucide="phone" class="w-4 h-4"></i> Contato</a>
             </nav>
 
-            <div id="headerProfile" class="invisible flex items-center gap-3 bg-orange-50 px-5 py-2 rounded-full border border-orange-100">
-                <p id="headerName" class="text-xs font-black text-orange-600 uppercase"></p>
-                <div class="w-8 h-8 rounded-full bg-[#ff4500] flex items-center justify-center text-white shadow-md"><i data-lucide="user" class="w-4 h-4"></i></div>
-            </div>
+            <button onclick="toggleDrawer()" class="lg:hidden p-2 text-slate-900"><i data-lucide="menu" class="w-6 h-6"></i></button>
         </div>
         <div class="h-[2px] w-full bg-gradient-to-r from-transparent via-orange-400 to-transparent opacity-50"></div>
     </header>
 
-    <main class="hero-bg-section py-12">
-        <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-12 gap-12">
-            <div class="lg:col-span-7 bg-white p-10 md:p-14 rounded-[3.5rem] shadow-2xl border border-slate-50">
-                <div id="validationBox" class="hidden mb-10 p-6 bg-red-50 border-l-4 border-red-500 rounded-r-2xl font-bold text-red-700">
-                    Preencha os dados destacados.
-                </div>
+    <!-- Mobile Drawer -->
+    <div id="mobileDrawer" class="fixed inset-y-0 right-0 w-72 bg-white z-[100] shadow-2xl p-8 flex flex-col gap-8 lg:hidden">
+        <button onclick="toggleDrawer()" class="self-end p-2 text-slate-400"><i data-lucide="x" class="w-6 h-6"></i></button>
+        <a href="https://hubconectbr.github.io/siteconsultorfinanceiro40/" onclick="toggleDrawer()" class="nav-item text-lg"><i data-lucide="home"></i> Inicial</a>
+        <a href="#resultsArea" onclick="toggleDrawer()" class="nav-item text-lg"><i data-lucide="briefcase"></i> Serviços</a>
+        <a href="#vantagens" onclick="toggleDrawer()" class="nav-item text-lg"><i data-lucide="award"></i> Vantagens</a>
+        <a href="#depoimentos" onclick="toggleDrawer()" class="nav-item text-lg"><i data-lucide="message-square"></i> Depoimentos</a>
+        <a href="https://wa.me/5563999637080" onclick="toggleDrawer()" class="nav-item text-lg"><i data-lucide="phone"></i> Contato</a>
+    </div>
+    <div id="drawerOverlay" onclick="toggleDrawer()" class="hidden fixed inset-0 bg-black/20 z-[90] lg:hidden backdrop-blur-sm"></div>
 
-                <div class="mb-10">
+    <main class="hero-bg-section py-8 md:py-12">
+        <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-12 gap-8 md:gap-12">
+            <!-- Formulário -->
+            <div class="lg:col-span-7 bg-white p-6 md:p-14 rounded-[2rem] md:rounded-[3.5rem] shadow-2xl border border-slate-50 w-full overflow-hidden">
+                <div id="validationBox" class="hidden mb-10 p-6 bg-red-50 border-l-4 border-red-500 rounded-r-2xl font-bold text-red-700">Preencha os dados destacados.</div>
+
+                <div class="mb-6 md:mb-10">
                     <label class="block label-chumbo mb-3 ml-1">Nome Completo *</label>
-                    <input type="text" id="userName" placeholder="Digite seu nome completo" class="input-field text-xl py-5">
+                    <input type="text" id="userName" placeholder="Digite seu nome completo" class="input-field text-lg md:text-xl">
                 </div>
 
-                <div class="grid md:grid-cols-3 gap-8 mb-10">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-6 md:mb-10">
                     <div>
                         <label class="block label-chumbo mb-3 ml-1">Salário Mensal (R$)</label>
                         <input type="number" id="userSalary" placeholder="0,00" class="input-field">
@@ -207,15 +183,15 @@
                         <input type="text" id="grossMargin" disabled class="input-field bg-slate-100 text-slate-400 font-black" placeholder="R$ 0,00">
                     </div>
                     <div>
-                        <label class="block label-chumbo mb-3 ml-1 text-ellipsis overflow-hidden">Margem Disponível (R$)</label>
+                        <label class="block label-chumbo mb-3 ml-1">Margem Disponível (R$)</label>
                         <input type="number" id="userMargin" placeholder="0,00" class="input-field border-orange-100">
                     </div>
                 </div>
 
-                <div id="scoreArea" class="hidden mb-12 p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100">
+                <div id="scoreArea" class="hidden mb-10 p-6 md:p-8 bg-slate-50 rounded-[2rem] border border-slate-100">
                     <div class="flex justify-between items-center mb-6">
-                        <h4 class="text-xs font-black text-slate-500 uppercase tracking-widest">Saúde Financeira Estimada</h4>
-                        <span id="scoreTag" class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase">Calculando</span>
+                        <h4 class="text-xs font-black text-slate-500 uppercase tracking-widest">Saúde Financeira</h4>
+                        <span id="scoreTag" class="px-3 py-1 rounded-full text-[10px] font-black uppercase bg-slate-200">Simulando</span>
                     </div>
                     <div class="relative pt-4">
                         <div class="h-3 bg-slate-200 rounded-full overflow-hidden flex">
@@ -225,238 +201,216 @@
                     </div>
                 </div>
 
-                <div class="mb-12">
-                    <label class="block label-chumbo mb-5 text-center">Prazo Desejado para Pagamento *</label>
-                    <div class="flex bg-slate-100 p-2 rounded-2xl gap-3 max-w-lg mx-auto term-container">
-                        <input type="radio" name="term" value="36" id="t36" class="hidden"><label for="t36" class="term-label flex-1 py-4 text-center rounded-xl cursor-pointer text-sm font-black p-4 rounded-xl">36x</label>
-                        <input type="radio" name="term" value="48" id="t48" class="hidden"><label for="t48" class="term-label flex-1 py-4 text-center rounded-xl cursor-pointer text-sm font-black p-4 rounded-xl">48x</label>
-                        <input type="radio" name="term" value="96" id="t96" class="hidden" checked><label for="t96" class="term-label flex-1 py-4 text-center rounded-xl cursor-pointer text-sm font-black p-4 rounded-xl">96x</label>
-                        <input type="radio" name="term" value="120" id="t120" class="hidden"><label for="t120" class="term-label flex-1 py-4 text-center rounded-xl cursor-pointer text-sm font-black p-4 rounded-xl">120x</label>
+                <div class="mb-10">
+                    <label class="block label-chumbo mb-5 text-center">Prazo Desejado</label>
+                    <div class="flex bg-slate-100 p-2 rounded-2xl gap-2 md:gap-3 max-w-lg mx-auto term-container">
+                        <input type="radio" name="term" value="36" id="t36" class="hidden"><label for="t36" class="term-label flex-1 py-3 md:py-4 text-center rounded-xl cursor-pointer text-xs md:text-sm font-black">36x</label>
+                        <input type="radio" name="term" value="48" id="t48" class="hidden"><label for="t48" class="term-label flex-1 py-3 md:py-4 text-center rounded-xl cursor-pointer text-xs md:text-sm font-black">48x</label>
+                        <input type="radio" name="term" value="96" id="t96" class="hidden" checked><label for="t96" class="term-label flex-1 py-3 md:py-4 text-center rounded-xl cursor-pointer text-xs md:text-sm font-black">96x</label>
+                        <input type="radio" name="term" value="120" id="t120" class="hidden"><label for="t120" class="term-label flex-1 py-3 md:py-4 text-center rounded-xl cursor-pointer text-xs md:text-sm font-black">120x</label>
                     </div>
                 </div>
 
-                <div class="mb-14 px-2">
-                    <div class="flex justify-between items-center mb-5">
-                        <label class="label-chumbo">Taxa de Juros Aplicada *</label>
-                        <span id="rateLabel" class="bg-blue-100 text-blue-800 px-5 py-2 rounded-full text-sm font-black">1.80% a.m</span>
+                <div class="mb-10 px-1">
+                    <div class="flex justify-between items-center mb-4">
+                        <label class="label-chumbo">Taxa de Juros</label>
+                        <span id="rateLabel" class="bg-blue-100 text-blue-800 px-4 py-1.5 rounded-full text-xs font-black">1.80% a.m</span>
                     </div>
                     <input type="range" id="rateSlider" min="1.25" max="2.10" step="0.01" value="1.80" class="w-full">
                 </div>
 
-                <div class="flex justify-center mb-12">
+                <div class="flex justify-center mb-10">
                     <div class="gift-highlight">
                         <input type="checkbox" id="giftCheck" class="w-6 h-6 accent-orange-600 cursor-pointer">
-                        <label for="giftCheck" class="text-base font-bold text-slate-700 cursor-pointer">Quero ganhar brinde exclusivo! 🎁</label>
+                        <label for="giftCheck" class="text-sm font-bold text-slate-700 cursor-pointer">Quero ganhar brinde! 🎁</label>
                     </div>
                 </div>
 
-                <button onclick="runCalculation()" class="btn-calc w-full">CALCULE MEU EMPRÉSTIMO AGORA</button>
+                <button id="mainCalcBtn" onclick="runCalculation()" class="btn-calc w-full py-4 md:py-5 text-sm md:text-lg bg-slate-400 pointer-events-none opacity-60 transition-all duration-300">CALCULE MEU EMPRÉSTIMO AGORA</button>
             </div>
 
+            <!-- Card Platinum -->
             <div class="lg:col-span-5 flex flex-col justify-center">
-                <div class="w-full max-w-[460px] aspect-[1.58/1] platinum-card rounded-[3.5rem] p-12 text-white flex flex-col justify-between mx-auto">
+                <div class="w-full max-w-[460px] aspect-[1.58/1] platinum-card rounded-[2rem] md:rounded-[3.5rem] p-6 md:p-12 text-white flex flex-col justify-between mx-auto shadow-2xl">
                     <div class="flex justify-between items-start relative z-10">
-                        <div class="flex flex-col gap-8">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center border border-white/30"><i data-lucide="crown" class="w-6 h-6 text-orange-200"></i></div>
-                                <span class="text-[11px] font-black uppercase tracking-[0.5em] text-orange-100">Rede Consig Elite</span>
+                        <div class="flex flex-col gap-4 md:gap-8">
+                            <div class="flex items-center gap-3 md:gap-4">
+                                <div class="w-10 h-10 md:w-12 md:h-12 bg-white/20 rounded-full flex items-center justify-center border border-white/30"><i data-lucide="crown" class="w-5 h-5 md:w-6 md:h-6 text-orange-200"></i></div>
+                                <span class="text-[9px] md:text-[11px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-orange-100">Rede Consig Elite</span>
                             </div>
-                            <div class="w-16 h-12 bg-slate-100/30 rounded-lg"></div>
+                            <div class="w-12 h-9 md:w-16 md:h-12 bg-slate-100/30 rounded-lg"></div>
                         </div>
                         <div class="text-right">
-                            <span class="text-3xl font-black italic tracking-tighter">REDE<span class="opacity-30">CONSIG</span></span>
-                            <div class="mt-12">
-                                <span class="block text-[10px] font-black uppercase opacity-60 tracking-widest mb-2">Crédito Estimado</span>
-                                <span id="cardLimit" class="text-4xl font-black tracking-tighter">R$ 0,00</span>
+                            <span class="text-xl md:text-3xl font-black italic tracking-tighter">REDE<span class="opacity-30">CONSIG</span></span>
+                            <div class="mt-6 md:mt-12">
+                                <span class="block text-[8px] md:text-[10px] font-black uppercase opacity-60 tracking-widest mb-1 md:mb-2">Crédito Estimado</span>
+                                <span id="cardLimit" class="text-2xl md:text-4xl font-black tracking-tighter">R$ 0,00</span>
                             </div>
                         </div>
                     </div>
                     <div class="relative z-10">
-                        <div class="text-xl font-mono tracking-[0.3em] mb-4 text-white/90">**** **** **** 2026</div>
-                        <span id="cardName" class="text-lg font-black uppercase block truncate tracking-widest">SEU NOME AQUI</span>
-                    </div>
-                </div>
-                
-                <div id="brindeInfo" class="mt-12 bg-orange-50 border border-orange-100 p-8 rounded-[2.5rem] flex items-center gap-5 mx-auto max-w-[460px]">
-                    <div class="bg-orange-500 p-4 rounded-2xl text-white shadow-xl"><i data-lucide="gift" class="w-7 h-7"></i></div>
-                    <div>
-                        <h5 class="text-sm font-black text-orange-700 uppercase mb-1">INFORMAÇÃO SOBRE O BRINDE</h5>
-                        <p class="text-xs text-orange-600 font-bold leading-relaxed">Atenção: O brinde estará condicionado ao servidor que efetivar um empréstimo com a Rede Consig.</p>
+                        <div class="text-base md:text-xl font-mono tracking-[0.2em] md:tracking-[0.3em] mb-2 md:mb-4 text-white/90">**** **** **** 2026</div>
+                        <span id="cardName" class="text-sm md:text-lg font-black uppercase block truncate tracking-widest">SEU NOME AQUI</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Seção dos Bancos -->
-        <div class="max-w-7xl mx-auto px-4 mt-24 text-center">
-            <h4 class="text-[11px] font-black text-slate-400 uppercase tracking-[0.6em] mb-12">BANCOS DISPONÍVEIS PARA A TAXA SELECIONADA</h4>
-            <div id="bankList" class="flex flex-wrap justify-center items-center gap-12 md:gap-20 mb-20"></div>
-            
+        <!-- Bancos Parceiros -->
+        <div class="max-w-7xl mx-auto px-4 mt-16 md:mt-24 text-center">
+            <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] md:tracking-[0.6em] mb-12">BANCOS DISPONÍVEIS PARA A TAXA SELECIONADA</h4>
+            <div id="bankList" class="flex flex-wrap justify-center items-center gap-8 md:gap-20 mb-16"></div>
             <div class="flex flex-col items-center">
-                <button onclick="window.open('https://wa.me/5563999637080')" class="bg-[#ff4500] text-white px-16 py-8 rounded-full font-black text-lg uppercase tracking-[0.2em] flex items-center gap-6 shadow-[0_20px_50px_rgba(255,69,0,0.4)] hover:scale-105 hover:bg-[#e63e00] transition-all transform duration-300">
-                    <i data-lucide="headphones" class="w-8 h-8"></i> 
-                    Falar com uma especialista
+                <button onclick="window.open('https://wa.me/5563999637080')" class="bg-[#ff4500] text-white px-10 md:px-16 py-6 md:py-8 rounded-full font-black text-base md:text-lg uppercase tracking-[0.2em] flex items-center gap-6 shadow-[0_20px_50px_rgba(255,69,0,0.4)] hover:scale-105 transition-all">
+                    <i data-lucide="headphones" class="w-6 h-6 md:w-8 md:h-8"></i> Falar com uma especialista
                 </button>
             </div>
         </div>
     </main>
 
-    <section id="estatisticas" class="max-w-7xl mx-auto px-4 mt-40 pt-20">
-        <h2 class="text-4xl font-black text-slate-900 text-center mb-24 uppercase tracking-tighter">Nossa Atuação em Números</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
+    <!-- Nossa Atuação em Números -->
+    <section id="estatisticas" class="max-w-7xl mx-auto px-4 mt-24 md:mt-40 pt-10 md:pt-20">
+        <h2 class="text-2xl md:text-4xl font-black text-slate-900 text-center mb-16 md:mb-24 uppercase tracking-tighter">Nossa Atuação em Números</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center">
             <div class="counter-box">
-                <div class="stats-icon-wrapper w-16 h-16 bg-orange-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg"><i data-lucide="users" class="w-8 h-8"></i></div>
-                <h4 class="text-5xl font-black text-orange-600 mb-2"><span class="counter" data-target="10000">0</span>+</h4>
-                <p class="text-[11px] font-bold uppercase text-slate-400 tracking-widest leading-relaxed">Clientes Atendidos</p>
+                <div class="w-12 h-12 md:w-16 md:h-16 bg-orange-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg"><i data-lucide="users" class="w-6 h-6 md:w-8 md:h-8"></i></div>
+                <h4 class="text-3xl md:text-5xl font-black text-orange-600 mb-1 md:mb-2"><span class="counter" data-target="10000">0</span>+</h4>
+                <p class="text-[9px] font-bold uppercase text-slate-400 tracking-widest leading-relaxed">Clientes Atendidos</p>
             </div>
             <div class="counter-box">
-                <div class="stats-icon-wrapper w-16 h-16 bg-orange-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg"><i data-lucide="landmark" class="w-8 h-8"></i></div>
-                <h4 class="text-5xl font-black text-orange-600 mb-2"><span class="counter" data-target="12">0</span>+</h4>
-                <p class="text-[11px] font-bold uppercase text-slate-400 tracking-widest leading-relaxed">Bancos Parceiros</p>
+                <div class="w-12 h-12 md:w-16 md:h-16 bg-orange-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg"><i data-lucide="landmark" class="w-6 h-6 md:w-8 md:h-8"></i></div>
+                <h4 class="text-3xl md:text-5xl font-black text-orange-600 mb-1 md:mb-2"><span class="counter" data-target="12">0</span>+</h4>
+                <p class="text-[9px] font-bold uppercase text-slate-400 tracking-widest leading-relaxed">Bancos Parceiros</p>
             </div>
             <div class="counter-box">
-                <div class="stats-icon-wrapper w-16 h-16 bg-orange-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg"><i data-lucide="handshake" class="w-8 h-8"></i></div>
-                <h4 class="text-5xl font-black text-orange-600 mb-2"><span class="counter" data-target="50">0</span>+</h4>
-                <p class="text-[11px] font-bold uppercase text-slate-400 tracking-widest leading-relaxed">Parceiros Confiáveis</p>
+                <div class="w-12 h-12 md:w-16 md:h-16 bg-orange-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg"><i data-lucide="handshake" class="w-6 h-6 md:w-8 md:h-8"></i></div>
+                <h4 class="text-3xl md:text-5xl font-black text-orange-600 mb-1 md:mb-2"><span class="counter" data-target="50">0</span>+</h4>
+                <p class="text-[9px] font-bold uppercase text-slate-400 tracking-widest leading-relaxed">Parceiros Oficiais</p>
             </div>
             <div class="counter-box">
-                <div class="stats-icon-wrapper w-16 h-16 bg-orange-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg"><i data-lucide="calendar" class="w-8 h-8"></i></div>
-                <h4 class="text-5xl font-black text-orange-600 mb-2"><span class="counter" data-target="15">0</span>+</h4>
-                <p class="text-[11px] font-bold uppercase text-slate-400 tracking-widest leading-relaxed">Anos de Mercado</p>
+                <div class="w-12 h-12 md:w-16 md:h-16 bg-orange-500 text-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg"><i data-lucide="calendar" class="w-6 h-6 md:w-8 md:h-8"></i></div>
+                <h4 class="text-3xl md:text-5xl font-black text-orange-600 mb-1 md:mb-2"><span class="counter" data-target="15">0</span>+</h4>
+                <p class="text-[9px] font-bold uppercase text-slate-400 tracking-widest leading-relaxed">Anos de Mercado</p>
             </div>
         </div>
     </section>
 
-    <section id="depoimentos" class="max-w-7xl mx-auto px-4 mt-32 pt-20 bg-orange-50/50 rounded-[4rem] p-12 lg:p-24">
-        <h2 class="text-4xl font-black text-slate-900 text-center mb-20 uppercase tracking-tighter">Quem conhece, confia</h2>
+    <!-- Quem conhece, confia -->
+    <section id="depoimentos" class="max-w-7xl mx-auto px-4 mt-32 pt-20 bg-orange-50/50 rounded-[2.5rem] md:rounded-[4rem] p-12 lg:p-24">
+        <h2 class="text-3xl md:text-4xl font-black text-slate-900 text-center mb-16 md:mb-20 uppercase tracking-tighter">Quem conhece, confia</h2>
         <div class="grid md:grid-cols-3 gap-8">
             <div class="testimonial-card relative pt-12 shadow-sm rounded-3xl">
-                <div class="absolute -top-8 left-1/2 -translate-x-1/2">
-                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Maria F." class="w-20 h-20 rounded-full border-4 border-white shadow-xl">
-                </div>
-                <div class="flex justify-center text-orange-400 mb-6"><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i></div>
-                <p class="text-slate-500 text-sm italic mb-8 leading-relaxed text-center">"Super indico. Achei que fosse ter muita burocracia, mas em alguns minutos o valor estava lá."</p>
-                <p class="font-black text-blue-900 uppercase text-xs tracking-widest text-center">Maria F.</p>
+                <div class="absolute -top-8 left-1/2 -translate-x-1/2"><img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-16 h-16 rounded-full border-4 border-white shadow-xl"></div>
+                <div class="flex justify-center text-orange-400 mb-4 md:mb-6"><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i></div>
+                <p class="text-slate-500 text-sm italic mb-6 md:mb-8 text-center leading-relaxed">"Super indico. Achei que fosse ter muita burocracia, mas em alguns minutos o valor estava lá. Podem confiar."</p>
+                <p class="font-black text-blue-900 uppercase text-[10px] md:text-xs text-center tracking-widest">Maria F.</p>
             </div>
             <div class="testimonial-card relative pt-12 shadow-sm rounded-3xl">
-                <div class="absolute -top-8 left-1/2 -translate-x-1/2">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Elias V." class="w-20 h-20 rounded-full border-4 border-white shadow-xl">
-                </div>
-                <div class="flex justify-center text-orange-400 mb-6"><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i></div>
-                <p class="text-slate-500 text-sm italic mb-8 leading-relaxed text-center">"A experiência foi ótima! Rápido, prático e seguro. Indico a Rede Consig para todos os colegas."</p>
-                <p class="font-black text-blue-900 uppercase text-xs tracking-widest text-center">Elias V.</p>
+                <div class="absolute -top-8 left-1/2 -translate-x-1/2"><img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-16 h-16 rounded-full border-4 border-white shadow-xl"></div>
+                <div class="flex justify-center text-orange-400 mb-4 md:mb-6"><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i></div>
+                <p class="text-slate-500 text-sm italic mb-6 md:mb-8 text-center leading-relaxed">"A experiência foi ótima! Rápido, prático e seguro. Super indico a Rede Consig para todos os colegas do serviço público."</p>
+                <p class="font-black text-blue-900 uppercase text-[10px] md:text-xs text-center tracking-widest">Elias V.</p>
             </div>
             <div class="testimonial-card relative pt-12 shadow-sm rounded-3xl">
-                <div class="absolute -top-8 left-1/2 -translate-x-1/2">
-                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Deble B." class="w-20 h-20 rounded-full border-4 border-white shadow-xl">
-                </div>
-                <div class="flex justify-center text-orange-400 mb-6"><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4 opacity-30"></i></div>
-                <p class="text-slate-500 text-sm italic mb-8 leading-relaxed text-center">"Atendimento correto, fui muito bem atendida e o suporte continuou disponível."</p>
-                <p class="font-black text-blue-900 uppercase text-xs tracking-widest text-center">Deble B.</p>
+                <div class="absolute -top-8 left-1/2 -translate-x-1/2"><img src="https://randomuser.me/api/portraits/women/68.jpg" class="w-16 h-16 rounded-full border-4 border-white shadow-xl"></div>
+                <div class="flex justify-center text-orange-400 mb-4 md:mb-6"><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4"></i><i data-lucide="star" class="fill-current w-4 h-4 opacity-30"></i></div>
+                <p class="text-slate-500 text-sm italic mb-6 md:mb-8 text-center leading-relaxed">"Atendimento correto, fui muito bem atendida e quando precisei de suporte a empresa continuou disponível."</p>
+                <p class="font-black text-blue-900 uppercase text-[10px] md:text-xs text-center tracking-widest">Deble B.</p>
             </div>
         </div>
     </section>
 
-    <section id="vantagens" class="max-w-7xl mx-auto px-4 mt-48 pt-20 text-center">
+    <!-- Porque escolher a Rede Consig -->
+    <section id="vantagens" class="max-w-7xl mx-auto px-4 mt-40 pt-20 text-center">
         <span class="text-[#ff4500] text-lg font-black uppercase tracking-[0.5em] mb-4 block">VANTAGENS</span>
-        <div class="w-24 h-2 bg-orange-500 mx-auto mb-12 rounded-full"></div>
-        <h2 class="text-5xl font-black text-slate-900 mb-20 tracking-tighter">Por Que Escolher a <span class="text-orange-600">Rede Consig?</span></h2>
-        
+        <div class="w-24 h-2 bg-orange-500 mx-auto mb-12 rounded-full shadow-inner"></div>
+        <h2 class="text-3xl md:text-5xl font-black text-slate-900 mb-20 tracking-tighter">Por Que Escolher a <span class="text-orange-600">Rede Consig?</span></h2>
         <div class="grid md:grid-cols-3 gap-12">
             <div class="advantage-card group">
-                <div class="w-16 h-16 bg-orange-500 text-white rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-md group-hover:scale-110 transition"><i data-lucide="trending-down" class="w-8 h-8"></i></div>
+                <div class="w-16 h-16 bg-orange-500 text-white rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-md transition group-hover:scale-110"><i data-lucide="trending-down" class="w-8 h-8"></i></div>
                 <h3 class="text-2xl font-black text-slate-900 mb-5 uppercase">Taxas Competitivas</h3>
-                <p class="text-slate-500 font-bold leading-relaxed">As melhores condições para realizar seus planos sem comprometer seu orçamento.</p>
+                <p class="text-slate-500 font-bold leading-relaxed">As melhores condições para realizar seus planos sem comprometer seu orçamento mensal.</p>
             </div>
             <div class="advantage-card group">
-                <div class="w-16 h-16 bg-orange-500 text-white rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-md group-hover:scale-110 transition"><i data-lucide="globe" class="w-8 h-8"></i></div>
+                <div class="w-16 h-16 bg-orange-500 text-white rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-md transition group-hover:scale-110"><i data-lucide="globe" class="w-8 h-8"></i></div>
                 <h3 class="text-2xl font-black text-slate-900 mb-5 uppercase">Atendimento Digital</h3>
-                <p class="text-slate-500 font-bold leading-relaxed">Comodidade e agilidade com suporte seguro em todo o Brasil.</p>
+                <p class="text-slate-500 font-bold leading-relaxed">Comodidade e agilidade com suporte 100% digital e seguro em todo o Brasil.</p>
             </div>
             <div class="advantage-card group">
-                <div class="w-16 h-16 bg-orange-500 text-white rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-md group-hover:scale-110 transition"><i data-lucide="shield-check" class="w-8 h-8"></i></div>
+                <div class="w-16 h-16 bg-orange-500 text-white rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-md transition group-hover:scale-110"><i data-lucide="shield-check" class="w-8 h-8"></i></div>
                 <h3 class="text-2xl font-black text-slate-900 mb-5 uppercase">Parcerias Oficiais</h3>
-                <p class="text-slate-500 font-bold leading-relaxed">Segurança total com os maiores bancos do país.</p>
+                <p class="text-slate-500 font-bold leading-relaxed">Segurança total com os maiores bancos do país que são parceiros oficiais da Rede Consig.</p>
             </div>
         </div>
     </section>
 
-    <!-- Soluções Personalizadas com margem inferior aumentada -->
-    <div id="resultsArea" class="max-w-7xl mx-auto px-4 mt-48 pt-20 mb-32">
-        <h2 class="text-4xl font-black text-slate-900 uppercase text-center mb-24 tracking-tighter">Soluções Personalizadas</h2>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12" id="productGrid"></div>
+    <!-- Soluções Personalizadas -->
+    <div id="resultsArea" class="max-w-7xl mx-auto px-4 mt-32 md:mt-48 pt-10 md:pt-20 mb-32">
+        <h2 class="text-3xl md:text-4xl font-black text-slate-900 uppercase text-center mb-16 md:mb-24 tracking-tighter">Soluções Personalizadas</h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-12" id="productGrid"></div>
     </div>
 
-    <!-- Aviso importante -->
-    <div class="max-w-7xl mx-auto px-4 mb-40 text-center">
-        <div class="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 max-w-3xl mx-auto">
-            <p class="text-[13px] font-bold text-slate-500 leading-relaxed uppercase tracking-widest">
-                ⚠️ <strong>Informação importante:</strong> As taxas de operação são variáveis e estes dados são demonstrativos, podendo variar conforme a operação de cada banco e perfil do cliente.
-            </p>
-        </div>
-    </div>
-
-    <footer class="bg-[#1a1a1a] text-white pt-20">
+    <!-- Rodapé -->
+    <footer class="bg-[#1a1a1a] text-white pt-16 md:pt-20">
         <div class="max-w-7xl mx-auto px-4 pb-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20 text-left">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-16 mb-20 text-center md:text-left">
                 <div class="col-span-1">
-                    <h3 class="text-3xl font-black tracking-tighter mb-8">Rede <span class="text-[#ff4500]">Consig</span></h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">Especialistas em crédito consignado e estratégia financeira personalizada.</p>
+                    <h3 class="text-2xl md:text-3xl font-black tracking-tighter mb-8">Rede <span class="text-[#ff4500]">Consig</span></h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Especialistas em crédito consignado e estratégia financeira personalizada para realizar seus objetivos com segurança.</p>
                 </div>
-                <div class="col-span-1">
+                <div class="col-span-1 hidden md:block">
                     <h3 class="text-[#ff4500] font-black text-sm uppercase mb-8 tracking-widest">Menu</h3>
                     <ul class="space-y-4 text-slate-400 text-sm font-bold">
                         <li><a href="#" class="hover:text-white transition">Início</a></li>
                         <li><a href="#resultsArea" class="hover:text-white transition">Serviços</a></li>
                         <li><a href="#vantagens" class="hover:text-white transition">Vantagens</a></li>
+                        <li><a href="#depoimentos" class="hover:text-white transition">Depoimentos</a></li>
                     </ul>
                 </div>
                 <div class="col-span-1">
-                    <h3 class="text-[#ff4500] font-black text-sm uppercase mb-8 tracking-widest">Serviços</h3>
-                    <ul class="space-y-4 text-slate-400 text-sm font-bold">
-                        <li>Consignado Principal</li>
-                        <li>Cartão Benefício</li>
-                        <li>Antecipação FGTS</li>
-                    </ul>
+                    <h3 class="text-[#ff4500] font-black text-sm uppercase mb-4 md:mb-8 tracking-widest">Contato</h3>
+                    <p class="text-slate-400 text-sm font-bold">(63) 99963-7080</p>
+                    <p class="text-slate-400 text-sm font-bold mt-2">atendimentocf4.0@gmail.com</p>
                 </div>
                 <div class="col-span-1">
-                    <h3 class="text-[#ff4500] font-black text-sm uppercase mb-8 tracking-widest">Contato</h3>
-                    <p class="text-slate-400 text-sm mb-4 font-bold">(63) 99963-7080</p>
-                    <p class="text-slate-400 text-sm font-bold">atendimentocf4.0@gmail.com</p>
+                    <h3 class="text-[#ff4500] font-black text-sm uppercase mb-4 md:mb-8 tracking-widest">Siga-nos</h3>
+                    <div class="flex justify-center md:justify-start gap-4">
+                        <a href="https://www.instagram.com/consultorfinanceiro4.0" class="text-slate-400 hover:text-white transition"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+                        <a href="https://www.instagram.com/redeconsig" class="text-slate-400 hover:text-white transition"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+                    </div>
                 </div>
             </div>
-            <div class="border-t border-slate-800 pt-10 text-center"><p class="text-[10px] font-black text-slate-600 uppercase tracking-[0.6em]">© 2024 Rede Consig - Palmas, Tocantins.</p></div>
+            <div class="border-t border-slate-800 pt-10 text-center"><p class="text-[9px] md:text-[10px] font-black text-slate-600 uppercase tracking-[0.4em] md:tracking-[0.6em]">© 2024 Rede Consig - Palmas - TO.</p></div>
         </div>
-        <div class="bg-[#ff4500] py-4 text-center">
-            <span class="text-white font-black text-xs uppercase tracking-[0.2em]">CONSULTOR FINANCEIRO 4.0 CREDENCIADO DA REDE CONSIG</span>
-        </div>
+        <div class="bg-[#ff4500] py-4 text-center"><span class="text-white font-black text-[10px] uppercase tracking-[0.1em]">CONSULTOR FINANCEIRO 4.0 CREDENCIADO DA REDE CONSIG</span></div>
     </footer>
 
-    <!-- Pop-up de Notificação Social -->
+    <!-- Notificações Sociais -->
     <div id="socialNotify">
-        <div class="w-12 h-12 bg-orange-100 text-[#ff4500] rounded-full flex items-center justify-center flex-shrink-0">
-            <i data-lucide="check-circle" class="w-6 h-6"></i>
-        </div>
+        <div class="w-10 h-10 md:w-12 md:h-12 bg-orange-100 text-[#ff4500] rounded-full flex items-center justify-center flex-shrink-0"><i data-lucide="check-circle" class="w-5 h-5 md:w-6 md:h-6"></i></div>
         <div>
-            <p id="notifyText" class="text-xs text-slate-600 leading-tight">
-                <strong id="notifyName" class="text-slate-900">João Silva</strong> acabou de contratar <strong>R$ <span id="notifyAmount">15.000</span></strong> para <span id="notifyDream">realizar a reforma da casa</span>.
+            <p id="notifyText" class="text-[10px] md:text-xs text-slate-600 leading-tight">
+                <strong id="notifyName" class="text-slate-900">João Silva</strong> contratou <strong>R$ <span id="notifyAmount">15.000</span></strong> para <span id="notifyDream">reformar a casa</span>.
             </p>
-            <p class="text-[10px] text-orange-500 font-black uppercase mt-1">Negócio Fechado! ✨</p>
+            <p class="text-[9px] text-orange-500 font-black uppercase mt-1">Negócio Fechado! ✨</p>
         </div>
     </div>
 
-    <!-- Valenttina Floating Avatar -->
-    <div class="fixed bottom-8 right-8 z-[100] flex flex-col items-end gap-5 pointer-events-none">
+    <!-- Valenttina Container (Desktop Only via CSS) -->
+    <div class="valenttina-container fixed bottom-8 right-8 z-[100] flex flex-col items-end gap-5 pointer-events-none">
         <div id="bubble" class="bg-white p-6 rounded-[2.5rem] shadow-2xl border border-slate-100 text-sm font-bold text-slate-700 max-w-[300px] pointer-events-auto transition-all transform scale-0 origin-bottom-right">
             <p id="bubbleText">Olá! Sou a Valenttina Duarte. Estou aqui para ajudar você a conquistar sua liberdade financeira! ✨</p>
         </div>
         <button onclick="window.open('https://wa.me/5563999637080')" class="valenttina-btn">
-            <img src="images/logo_whatsapp_valenttina_duarte.png" alt="Valenttina Duarte" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200'">
+            <img src="images/valenttina.jpg" alt="Valenttina Duarte" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200'">
         </button>
     </div>
 
     <script>
         const WHATS_NUM = "5563999637080";
+        const isMobile = window.innerWidth < 1024;
+        
+        // Mensagens da Valenttina Duarte
         const valenttinaQuotes = [
             "Já sei que você deve estar pensando o que fazer com esse dinheiro que vai sobrar na sua conta! 💰",
             "Imagine a tranquilidade de dormir sem se preocupar com boletos. Esse alívio está a um clique de distância. ✨",
@@ -465,33 +419,24 @@
             "Você trabalhou duro para chegar até aqui. Deixe a gente cuidar da burocracia enquanto você aproveita o que realmente importa. ❤️"
         ];
 
-        // Dados para Notificações Sociais
         const notifyNames = ["Marcos", "Ana", "Ricardo", "Juliana", "Carlos", "Luciana", "Fernando", "Patrícia", "Sérgio", "Renata"];
-        const amounts = ["6.000", "8.500", "15.000", "3.000", "5.400", "12.200", "20.000", "4.100", "2.500", "35.000", "7.800", "50.000"];
-        const dreams = [
-            "realizar a reforma da casa", "fazer a viagem dos sonhos", "quitar dívidas pendentes", 
-            "comprar um novo veículo", "investir no próprio negócio", "ajudar a família",
-            "pagar os estudos", "limpar o nome", "comprar móveis novos",
-            "fazer um curso de especialização", "dar entrada em um imóvel", "organizar uma festa de casamento"
-        ];
+        const notifyAmounts = ["6.000", "8.500", "15.000", "3.000", "5.400", "12.200", "20.000", "4.100", "2.500", "35.000", "7.800", "50.000"];
+        const dreams = ["realizar a reforma da casa", "fazer a viagem dos sonhos", "quitar dívidas pendentes", "comprar um novo veículo", "investir no próprio negócio", "ajudar a família", "pagar os estudos", "limpar o nome", "comprar móveis novos", "dar entrada em um imóvel"];
 
         let idleTimer;
         let lastQuoteIndex = -1;
 
-        const banks = [
-            { name: 'BMG', rate: 1.25, logo: `<svg class="w-[120px] h-[50px]" viewBox="0 0 120 50"><rect width="120" height="50" rx="12" fill="#FF5C00"/><text x="60" y="32" fill="white" font-weight="900" text-anchor="middle">BMG</text></svg>` },
-            { name: 'Inter', rate: 1.35, logo: `<svg class="w-[120px] h-[50px]" viewBox="0 0 120 50"><rect width="120" height="50" rx="12" fill="#FF7A00"/><text x="60" y="32" fill="white" font-weight="900" text-anchor="middle">INTER</text></svg>` },
-            { name: 'C6 Bank', rate: 1.45, logo: `<svg class="w-[120px] h-[50px]" viewBox="0 0 120 50"><rect width="120" height="50" rx="12" fill="#1A1A1A"/><text x="60" y="32" fill="white" font-weight="900" text-anchor="middle">C6 BANK</text></svg>` },
-            { name: 'PAN', rate: 1.50, logo: `<svg class="w-[120px] h-[50px]" viewBox="0 0 120 50"><rect width="120" height="50" rx="12" fill="#0057B8"/><text x="60" y="32" fill="white" font-weight="900" text-anchor="middle">PAN</text></svg>` },
-            { name: 'PicPay', rate: 1.65, logo: `<svg class="w-[120px] h-[50px]" viewBox="0 0 120 50"><rect width="120" height="50" rx="12" fill="#21C25E"/><text x="60" y="32" fill="white" font-weight="900" text-anchor="middle">PICPAY</text></svg>` },
-            { name: 'Brasil', rate: 1.80, logo: `<svg class="w-[120px] h-[50px]" viewBox="0 0 120 50"><rect width="120" height="50" rx="12" fill="#F9DD16"/><text x="60" y="32" fill="#0038A8" font-weight="900" text-anchor="middle">BANCO BRASIL</text></svg>` }
-        ];
-
+        // Lógica de Mensagens da Valenttina Duarte (Apenas Desktop)
         function typeValenttinaMessage(message) {
+            if (isMobile) return; // Não ativa em celulares
+            
             const bubble = document.getElementById('bubble');
             const bubbleText = document.getElementById('bubbleText');
+            if (!bubble || !bubbleText) return;
+            
             bubbleText.innerHTML = `<div class="typing-indicator"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div> Digitando...`;
             bubble.classList.add('scale-100');
+            
             setTimeout(() => {
                 bubbleText.innerText = message;
                 resetIdleTimer();
@@ -499,44 +444,65 @@
         }
 
         function resetIdleTimer() {
+            if (isMobile) return; // Não ativa em celulares
+            
             clearTimeout(idleTimer);
             idleTimer = setTimeout(() => {
                 let nextIndex;
-                do { nextIndex = Math.floor(Math.random() * valenttinaQuotes.length); } while (nextIndex === lastQuoteIndex);
+                do {
+                    nextIndex = Math.floor(Math.random() * valenttinaQuotes.length);
+                } while (nextIndex === lastQuoteIndex);
                 lastQuoteIndex = nextIndex;
                 typeValenttinaMessage(valenttinaQuotes[nextIndex]);
             }, 20000);
         }
 
-        // Função para mostrar notificação social
+        function toggleDrawer() {
+            document.getElementById('mobileDrawer').classList.toggle('active');
+            document.getElementById('drawerOverlay').classList.toggle('hidden');
+        }
+
+        const banks = [
+            { name: 'BMG', rate: 1.25, logo: `<svg class="w-[100px] h-[40px] md:w-[120px] md:h-[50px]" viewBox="0 0 120 50"><rect width="120" height="50" rx="12" fill="#FF5C00"/><text x="60" y="32" fill="white" font-weight="900" text-anchor="middle">BMG</text></svg>` },
+            { name: 'Inter', rate: 1.35, logo: `<svg class="w-[100px] h-[40px] md:w-[120px] md:h-[50px]" viewBox="0 0 120 50"><rect width="120" height="50" rx="12" fill="#FF7A00"/><text x="60" y="32" fill="white" font-weight="900" text-anchor="middle">INTER</text></svg>` },
+            { name: 'C6 Bank', rate: 1.45, logo: `<svg class="w-[100px] h-[40px] md:w-[120px] md:h-[50px]" viewBox="0 0 120 50"><rect width="120" height="50" rx="12" fill="#1A1A1A"/><text x="60" y="32" fill="white" font-weight="900" text-anchor="middle">C6 BANK</text></svg>` },
+            { name: 'PAN', rate: 1.50, logo: `<svg class="w-[100px] h-[40px] md:w-[120px] md:h-[50px]" viewBox="0 0 120 50"><rect width="120" height="50" rx="12" fill="#0057B8"/><text x="60" y="32" fill="white" font-weight="900" text-anchor="middle">PAN</text></svg>` },
+            { name: 'PicPay', rate: 1.65, logo: `<svg class="w-[100px] h-[40px] md:w-[120px] md:h-[50px]" viewBox="0 0 120 50"><rect width="120" height="50" rx="12" fill="#21C25E"/><text x="60" y="32" fill="white" font-weight="900" text-anchor="middle">PICPAY</text></svg>` },
+            { name: 'Brasil', rate: 1.80, logo: `<svg class="w-[100px] h-[40px] md:w-[120px] md:h-[50px]" viewBox="0 0 120 50"><rect width="120" height="50" rx="12" fill="#F9DD16"/><text x="60" y="32" fill="#0038A8" font-weight="900" text-anchor="middle">BANCO BRASIL</text></svg>` }
+        ];
+
         function showSocialProof() {
             const popup = document.getElementById('socialNotify');
             const nameEl = document.getElementById('notifyName');
             const amountEl = document.getElementById('notifyAmount');
             const dreamEl = document.getElementById('notifyDream');
-
-            const randomName = notifyNames[Math.floor(Math.random() * notifyNames.length)];
-            const randomAmount = amounts[Math.floor(Math.random() * amounts.length)];
-            const randomDream = dreams[Math.floor(Math.random() * dreams.length)];
-
-            nameEl.innerText = randomName;
-            amountEl.innerText = randomAmount;
-            dreamEl.innerText = randomDream;
-
+            nameEl.innerText = notifyNames[Math.floor(Math.random() * notifyNames.length)];
+            amountEl.innerText = notifyAmounts[Math.floor(Math.random() * notifyAmounts.length)];
+            dreamEl.innerText = dreams[Math.floor(Math.random() * dreams.length)];
             popup.classList.add('active');
-
-            setTimeout(() => {
-                popup.classList.remove('active');
-            }, 6000); // Fica visível por 6 segundos
+            setTimeout(() => { popup.classList.remove('active'); }, isMobile ? 4000 : 7000);
         }
 
         function formatBRL(v) { return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v); }
 
+        function validateForm() {
+            const name = document.getElementById('userName').value;
+            const salary = document.getElementById('userSalary').value;
+            const margin = document.getElementById('userMargin').value;
+            const btn = document.getElementById('mainCalcBtn');
+
+            if (name && salary && margin) {
+                btn.classList.remove('bg-slate-400', 'pointer-events-none', 'opacity-60');
+                btn.classList.add('bg-[#ff4500]', 'opacity-100', 'shadow-[0_12px_24px_-6px_rgba(255,69,0,0.4)]');
+            } else {
+                btn.classList.add('bg-slate-400', 'pointer-events-none', 'opacity-60');
+                btn.classList.remove('bg-[#ff4500]', 'opacity-100', 'shadow-[0_12px_24px_-6px_rgba(255,69,0,0.4)]');
+            }
+        }
+
         function updateDisplay() {
-            const salaryInput = document.getElementById('userSalary');
-            const marginInput = document.getElementById('userMargin');
-            const salary = parseFloat(salaryInput.value) || 0;
-            const margin = parseFloat(marginInput.value) || 0;
+            const salary = parseFloat(document.getElementById('userSalary').value) || 0;
+            const margin = parseFloat(document.getElementById('userMargin').value) || 0;
             const rate = parseFloat(document.getElementById('rateSlider').value);
             const term = Array.from(document.getElementsByName('term')).find(r => r.checked)?.value || 96;
 
@@ -554,7 +520,7 @@
                 const isActive = b.rate <= rate;
                 const div = document.createElement('div');
                 div.className = `bank-item flex flex-col items-center gap-4 ${isActive ? 'active' : ''}`;
-                div.innerHTML = `<div class="shadow-md rounded-2xl overflow-hidden">${b.logo}</div><span class="text-[11px] font-black text-slate-400 uppercase tracking-widest">${b.rate.toFixed(2)}%</span>`;
+                div.innerHTML = `<div class="shadow-md rounded-2xl overflow-hidden">${b.logo}</div><span class="text-[10px] font-black text-slate-400 uppercase">${b.rate.toFixed(2)}%</span>`;
                 bankList.appendChild(div);
             });
 
@@ -577,15 +543,15 @@
 
             list.forEach(p => {
                 const card = document.createElement('div');
-                card.className = `advantage-card flex flex-col justify-between ${p.isVIP ? 'border-green-400 ring-4 ring-green-50 bg-green-50/30' : ''}`;
+                card.className = `advantage-card flex flex-col justify-between ${p.isVIP ? 'border-green-400 bg-green-50/30' : ''}`;
                 const valTxt = p.isVIP ? 'GRÁTIS' : (margin > 0 ? formatBRL(p.v) : 'SIMULAR');
                 const iconBg = p.isVIP ? 'bg-green-600 text-white' : 'bg-orange-50 text-orange-600';
                 
-                card.innerHTML = `<div><div class="w-16 h-16 ${iconBg} rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-sm"><i data-lucide="${p.i}" class="w-8 h-8"></i></div><h3 class="font-black text-slate-900 text-xl mb-4 text-center uppercase tracking-tighter leading-tight">${p.n}</h3><p class="text-slate-400 text-xs font-bold mb-10 leading-relaxed text-center">${p.d}</p><div class="bg-slate-50 p-8 rounded-[2.5rem] mb-10 text-center border shadow-inner"><span class="text-3xl font-black">${valTxt}</span></div></div><button onclick="sendWA('${p.n}')" class="w-full ${p.isVIP ? 'bg-green-600' : 'bg-slate-900'} text-white py-6 rounded-3xl font-black text-xs uppercase tracking-widest transition-all">Saber Mais</button>`;
+                card.innerHTML = `<div><div class="w-12 h-12 md:w-16 md:h-16 ${iconBg} rounded-2xl flex items-center justify-center mx-auto mb-6 md:mb-8"><i data-lucide="${p.i}" class="w-6 h-6 md:w-8 md:h-8"></i></div><h3 class="font-black text-slate-900 text-lg md:text-xl mb-4 text-center uppercase tracking-tight leading-tight">${p.n}</h3><p class="text-slate-400 text-[10px] font-bold mb-8 text-center leading-relaxed">${p.d}</p><div class="bg-slate-50 p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] mb-8 text-center border shadow-inner"><span class="text-xl md:text-3xl font-black">${valTxt}</span></div></div><button onclick="sendWA('${p.n}')" class="w-full ${p.isVIP ? 'bg-green-600' : 'bg-slate-900'} text-white py-4 md:py-6 rounded-2xl md:rounded-3xl font-black text-[10px] uppercase tracking-widest transition-all">Saber Mais</button>`;
                 grid.appendChild(card);
             });
             lucide.createIcons();
-            resetIdleTimer();
+            validateForm();
         }
 
         function runCalculation() {
@@ -594,32 +560,33 @@
                 return;
             }
             document.getElementById('resultsArea')?.scrollIntoView({ behavior: 'smooth' });
-            typeValenttinaMessage("Nossa! Vi aqui que você tem uma ótima oportunidade. Vamos aproveitar esse alívio hoje? 🚀");
+            
+            // Mensagem da Valenttina ao calcular (Apenas Desktop)
+            if (!isMobile) {
+                typeValenttinaMessage("Nossa! Vi aqui que você tem uma ótima oportunidade. Vamos aproveitar esse alívio financeiro hoje? 🚀");
+            }
         }
 
         function sendWA(prod) {
-            typeValenttinaMessage(`O ${prod} é perfeito para o seu momento. Vamos fechar no WhatsApp! 🤝`);
-            setTimeout(() => {
-                const brinde = document.getElementById('giftCheck').checked ? "SIM" : "NÃO";
-                const msg = `Olá Valenttina! Sou ${document.getElementById('userName').value}.\nSimulei: *${prod}*\n💰 Salário: R$ ${document.getElementById('userSalary').value}\n📉 Margem: R$ ${document.getElementById('userMargin').value}\n🎁 Brinde: ${brinde}`;
-                window.open(`https://wa.me/${WHATS_NUM}?text=${encodeURIComponent(msg)}`);
-            }, 1800);
+            const brinde = document.getElementById('giftCheck').checked ? "SIM" : "NÃO";
+            const msg = `Olá! Sou ${document.getElementById('userName').value}.\nSimulei: *${prod}*\n💰 Salário: R$ ${document.getElementById('userSalary').value}\n📉 Margem: R$ ${document.getElementById('userMargin').value}\n🎁 Brinde: ${brinde}`;
+            window.open(`https://wa.me/${WHATS_NUM}?text=${encodeURIComponent(msg)}`);
         }
 
         function animateCounters() {
             const counters = document.querySelectorAll('.counter');
             counters.forEach(counter => {
-                const updateCount = () => {
-                    const target = +counter.getAttribute('data-target');
-                    const count = +counter.innerText;
-                    const inc = target / 200;
-                    if (count < target) {
-                        counter.innerText = Math.ceil(count + inc);
-                        setTimeout(updateCount, 10);
-                    } else { counter.innerText = target; }
-                };
                 const observer = new IntersectionObserver((entries) => {
-                    if(entries[0].isIntersecting) { updateCount(); observer.disconnect(); }
+                    if(entries[0].isIntersecting) { 
+                        const target = +counter.getAttribute('data-target');
+                        let count = 0; const inc = target / 100;
+                        const timer = setInterval(() => {
+                            count += inc;
+                            if(count >= target) { counter.innerText = target; clearInterval(timer); }
+                            else { counter.innerText = Math.ceil(count); }
+                        }, 20);
+                        observer.disconnect(); 
+                    }
                 }, { threshold: 0.5 });
                 observer.observe(counter);
             });
@@ -627,9 +594,11 @@
 
         document.getElementById('userName').addEventListener('input', (e) => {
             document.getElementById('cardName').innerText = e.target.value.toUpperCase() || "SEU NOME AQUI";
-            if(e.target.value) { document.getElementById('headerProfile').classList.remove('invisible'); document.getElementById('headerName').innerText = e.target.value; }
-            resetIdleTimer();
+            validateForm();
         });
+
+        document.getElementById('userSalary').addEventListener('input', validateForm);
+        document.getElementById('userMargin').addEventListener('input', validateForm);
 
         document.getElementById('rateSlider').oninput = updateDisplay;
         document.getElementById('userSalary').oninput = updateDisplay;
@@ -640,12 +609,17 @@
             updateDisplay(); 
             lucide.createIcons(); 
             animateCounters();
-            resetIdleTimer();
-            setTimeout(() => { document.getElementById('bubble').classList.add('scale-100'); }, 4000);
             
-            // Inicia o ciclo de notificações sociais (Pop-up lateral)
-            setInterval(showSocialProof, 15000); // Aparece a cada 15 segundos
-            setTimeout(showSocialProof, 5000); // Primeira notificação após 5 segundos
+            // Inicia ciclo da Valenttina Duarte apenas se NÃO for celular
+            if (!isMobile) {
+                resetIdleTimer();
+                setTimeout(() => {
+                    document.getElementById('bubble')?.classList.add('scale-100');
+                }, 4000);
+            }
+            
+            setInterval(showSocialProof, isMobile ? 12000 : 18000);
+            setTimeout(showSocialProof, 3000);
         };
     </script>
 </body>
